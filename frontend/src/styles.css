@@ -1,0 +1,118 @@
+html {
+  text-align: center;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+}
+
+footer {
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 60px;
+  margin-top: 100px;
+}
+
+.navbar{
+  background-color: rgba(128, 128, 128, 0.09);
+}
+
+/* SURVEY SCREEN  */
+
+.survey-screen {
+  margin: 100px 25px;
+}
+
+.survey-screen h1 {
+  margin-bottom: 50px;
+}
+
+.surveys-row {
+  justify-content: center;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* SINGLE SURVEY SCREEN */
+
+.single-survey {
+  margin: 100px auto;
+}
+
+.css-e53awj-MuiStack-root{
+  justify-content: center;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.choice-radio{
+  align-content: center;
+}
+
+/* CREATE SURVEY SCREEN */
+
+.create-survey{
+  width: 80%;
+  height: 1000px;
+  margin: 100px auto;
+  background-color: rgba(128, 128, 128, 0.09);
+  border-radius: 10px;
+}
+
+.question-input{
+  border: solid;
+  border-radius: 10px;
+  border-color: rgba(128, 128, 128, 0.299);
+  width: 80%;
+  margin: 20px auto;
+}
+
+.add-option-control{
+  margin-top: 50px;
+}
+
+.question {
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 10px;
+  width: 240px;
+  margin: 16px;
+  float: left;
+}
+
+.question h1 {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+
+.question p {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.question button {
+  position: relative;
+  margin-right: 10px;
+  height: 36px;
+  cursor: pointer;
+  border: none;
+}
+
+.input-row{
+  justify-content: center;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.input-col{
+  margin-right: 0;
+  margin-left: 0;
+  width: 100%;
+}
