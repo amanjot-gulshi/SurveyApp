@@ -38,4 +38,7 @@ class Choice(models.Model):
         return self.choice_text
 
 
-
+class FilledSurvey(models.Model):
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    taker = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_taken = models.DateTimeField('date taken')
