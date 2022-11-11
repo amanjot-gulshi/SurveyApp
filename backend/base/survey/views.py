@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from ..models import Survey
+from .models import Survey
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from ..serializers import SurveySerializer
+from .serializers import SurveySerializer
 
 # Create your views here.
 
