@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from .serializers import UserSerializer, UserSerializerWithToken
+from .serializers import UserProfileSerializerWithToken, UserProfileSerializer, SurveyorProfileSerializer, SurveyProfileSerializerWithToken
 # Create your views here.
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -17,7 +17,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        serializer = UserSerializerWithToken(self.user).data
+        serializer = UserProfileSerializerWithToken(self.user).data
         for k, v in serializer.items():
             data[k] = v
 
@@ -39,7 +39,7 @@ def registerUser(request):
             password=make_password(data['password'])
         )
 
-        serializer = UserSerializerWithToken(user, many=False)
+        serializer = UserProfileSerializerWithToken(user, many=False)
         return Response(serializer.data)
     except:
         message = {'detail': 'User with this email already exists'}
@@ -50,7 +50,7 @@ def registerUser(request):
 @permission_classes([IsAuthenticated])
 def updateUserProfile(request):
     user = request.user
-    serializer = UserSerializerWithToken(user, many=False)
+    serializer = UserProfileSerializerWithToken(user, many=False)
 
     data = request.data
     user.first_name = data['name']
@@ -69,7 +69,7 @@ def updateUserProfile(request):
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):
     user = request.user
-    serializer = UserSerializer(user, many=False)
+    serializer = UserProfileSerializer(user, many=False)
     return Response(serializer.data)
 
 
@@ -77,7 +77,7 @@ def getUserProfile(request):
 @permission_classes([IsAdminUser])
 def getUsers(request):
     users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
+    serializer = UserProfileSerializer(users, many=True)
     return Response(serializer.data)
 
 
@@ -85,7 +85,7 @@ def getUsers(request):
 @permission_classes([IsAdminUser])
 def getUserById(request, pk):
     user = User.objects.get(id=pk)
-    serializer = UserSerializer(user, many=False)
+    serializer = UserProfileSerializer(user, many=False)
     return Response(serializer.data)
 
 
@@ -103,7 +103,7 @@ def updateUser(request, pk):
 
     user.save()
 
-    serializer = UserSerializer(user, many=False)
+    serializer = UserProfileSerializer(user, many=False)
 
     return Response(serializer.data)
 
