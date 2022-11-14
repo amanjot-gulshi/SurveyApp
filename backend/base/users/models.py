@@ -16,7 +16,6 @@ class UserProfile(models.Model):
     email = models.EmailField(max_length=500, blank=True, null=True)
     username = models.CharField(max_length=200, blank=True, null=True)
     location = models.CharField(max_length=200, blank=True, null=True)
-    birth_date = models.DateField('birthdate', blank=True)
     account_balance = models.IntegerField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 

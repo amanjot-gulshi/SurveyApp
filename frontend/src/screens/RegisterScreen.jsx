@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
-import { register } from '../actions/userActions'
+import { registerUser } from '../actions/userActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
 function RegisterScreen() {
 
-    const [name, setName] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
+    const [age, setAge] = useState('')
+    const [location, setLocation] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState('')
@@ -17,9 +20,9 @@ function RegisterScreen() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    let location = useLocation();
+    let urlLocation = useLocation();
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const redirect = urlLocation.search ? urlLocation.search.split('=')[1] : '/'
 
     const userRegister = useSelector(state => state.userRegister)
     const { error, loading, userInfo } = userRegister
@@ -36,7 +39,7 @@ function RegisterScreen() {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(register(name, email, password))
+            dispatch(registerUser(firstName, lastName, age, email, location, password))
         }
     }
 
@@ -54,12 +57,39 @@ function RegisterScreen() {
                             {/* Makes POST request to /register route */}
                             <form action="/register" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                                 <div className="form-group">
-                                    <label>Name</label>
+                                    <label>First Name</label>
                                     <input
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e) => setFirstName(e.target.value)}
                                         type="text"
-                                        name="name"
-                                        value={name}
+                                        name="first_name"
+                                        value={firstName}
+                                        className="form-control" />
+                                </div>
+                                <div className="form-group">
+                                    <label>Last Name</label>
+                                    <input
+                                        onChange={(e) => setLastName(e.target.value)}
+                                        type="text"
+                                        name="last_name"
+                                        value={lastName}
+                                        className="form-control" />
+                                </div>
+                                <div className="form-group">
+                                    <label>Age</label>
+                                    <input
+                                        onChange={(e) => setAge(e.target.value)}
+                                        type="number"
+                                        name="age"
+                                        value={age}
+                                        className="form-control" />
+                                </div>
+                                <div className="form-group">
+                                    <label>Location</label>
+                                    <input
+                                        onChange={(e) => setLocation(e.target.value)}
+                                        type="text"
+                                        name="location"
+                                        value={location}
                                         className="form-control" />
                                 </div>
                                 <div className="form-group">
