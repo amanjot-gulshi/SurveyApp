@@ -79,7 +79,7 @@ export const logout = () => (dispatch) => {
 }
 
 
-export const registerUser = (first_name, last_name, age, email, location, password) => async (dispatch) => {
+export const register = (name, email, password) => async (dispatch) => {
     try {
         dispatch({
             type: USER_REGISTER_REQUEST
@@ -93,14 +93,7 @@ export const registerUser = (first_name, last_name, age, email, location, passwo
 
         const { data } = await axios.post(
             '/api/users/register/user',
-            { 
-                'first_name': first_name,
-                'last_name': last_name,
-                'location': location,
-                'age': age,
-                'email': email, 
-                'password': password 
-            },
+            { 'name': name, 'email': email, 'password': password },
             config
         )
 
@@ -126,51 +119,51 @@ export const registerUser = (first_name, last_name, age, email, location, passwo
     }
 }
 
-export const registerSurveyor = (name, email, location, account_balance, password) => async (dispatch) => {
-    try {
-        dispatch({
-            type: USER_REGISTER_REQUEST
-        })
+// export const registerSurveyor = (name, email, location, account_balance, password) => async (dispatch) => {
+//     try {
+//         dispatch({
+//             type: USER_REGISTER_REQUEST
+//         })
 
-        const config = {
-            headers: {
-                'Content-type': 'application/json'
-            }
-        }
+//         const config = {
+//             headers: {
+//                 'Content-type': 'application/json'
+//             }
+//         }
 
-        const { data } = await axios.post(
-            '/api/users/register/surveyor',
-            { 
-                'institution_name': name, 
-                'email': email, 
-                'location': location,
-                'account_balance': account_balance,
-                'password': password 
-            },
-            config
-        )
+//         const { data } = await axios.post(
+//             '/api/users/register/surveyor',
+//             { 
+//                 'institution_name': name, 
+//                 'email': email, 
+//                 'location': location,
+//                 'account_balance': account_balance,
+//                 'password': password 
+//             },
+//             config
+//         )
 
-        dispatch({
-            type: USER_REGISTER_SUCCESS,
-            payload: data
-        })
+//         dispatch({
+//             type: USER_REGISTER_SUCCESS,
+//             payload: data
+//         })
 
-        dispatch({
-            type: USER_LOGIN_SUCCESS,
-            payload: data
-        })
+//         dispatch({
+//             type: USER_LOGIN_SUCCESS,
+//             payload: data
+//         })
 
-        localStorage.setItem('userInfo', JSON.stringify(data))
+//         localStorage.setItem('userInfo', JSON.stringify(data))
 
-    } catch (error) {
-        dispatch({
-            type: USER_REGISTER_FAIL,
-            payload: error.response && error.response.data.detail
-                ? error.response.data.detail
-                : error.message,
-        })
-    }
-}
+//     } catch (error) {
+//         dispatch({
+//             type: USER_REGISTER_FAIL,
+//             payload: error.response && error.response.data.detail
+//                 ? error.response.data.detail
+//                 : error.message,
+//         })
+//     }
+// }
 
 
 export const getUserDetails = (id) => async (dispatch, getState) => {

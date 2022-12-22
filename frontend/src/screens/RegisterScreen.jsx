@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
-import { registerUser } from '../actions/userActions'
+import { register } from '../actions/userActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
 function RegisterScreen() {
 
     const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
+    // const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [age, setAge] = useState('')
-    const [location, setLocation] = useState('')
+    // const [age, setAge] = useState('')
+    // const [location, setLocation] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState('')
@@ -39,7 +39,7 @@ function RegisterScreen() {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(registerUser(firstName, lastName, age, email, location, password))
+            dispatch(register(firstName, email, password))
         }
     }
 
@@ -57,15 +57,15 @@ function RegisterScreen() {
                             {/* Makes POST request to /register route */}
                             <form action="/register" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                                 <div className="form-group">
-                                    <label>First Name</label>
+                                    <label>Name</label>
                                     <input
                                         onChange={(e) => setFirstName(e.target.value)}
                                         type="text"
-                                        name="first_name"
+                                        name="name"
                                         value={firstName}
                                         className="form-control" />
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <label>Last Name</label>
                                     <input
                                         onChange={(e) => setLastName(e.target.value)}
@@ -91,7 +91,7 @@ function RegisterScreen() {
                                         name="location"
                                         value={location}
                                         className="form-control" />
-                                </div>
+                                </div> */}
                                 <div className="form-group">
                                     <label>Email</label>
                                     <input

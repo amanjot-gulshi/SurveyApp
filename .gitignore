@@ -21,3 +21,10 @@
 /frontend/npm-debug.log*
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
+
+
+/backend/Include
+/backend/Lib
+/backend/Scripts
+/backend/db.sqlite3
+/backend/pyvenv.cfg

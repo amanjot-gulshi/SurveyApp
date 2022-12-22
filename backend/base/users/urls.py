@@ -8,7 +8,7 @@ urlpatterns = [
          name='token_obtain_pair'),
 
     path('register/user', views.registerUser, name='register-user'),
-    path('register/surveyor', views.registerSurveyor, name='register-surveyor'),
+    # path('register/surveyor', views.registerSurveyor, name='register-surveyor'),
 
     path('profile/', views.getUserProfile, name="users-profile"),
     path('profile/update/', views.updateUserProfile, name="user-profile-update"),

@@ -29,45 +29,62 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+# @api_view(['POST'])
+# def registerUser(request):
+#     data = request.data
+#     print(data)
+#     try:
+#         print("Begin")
+#         user = UserProfile.objects.create(
+#             first_name=data['first_name'],
+#             last_name=data['last_name'],
+#             age=data['age'],
+#             location=data['location'],
+#             username=data['email'],
+#             email=data['email'],
+#             # password=make_password(data['password'])
+#         )
+#         print("End")
+
+#         serializer = UserProfileSerializerWithToken(user, many=False)
+#         return Response(serializer.data)
+#     except:
+#         message = {'detail': 'User with this email already exists'}
+#         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        
+# @api_view(['POST'])
+# def registerSurveyor(request):
+#     data = request.data
+#     try:
+#         user = SurveyorProfile.objects.create(
+#             institution_name=data['name'],
+#             username=data['email'],
+#             email=data['email'],
+#             account_balance=data['account_balance'],
+#             password=make_password(data['password'])
+#         )
+
+#         serializer = SurveyProfileSerializerWithToken(user, many=False)
+#         return Response(serializer.data)
+#     except:
+#         message = {'detail': 'Surveyor with this email already exists'}
+#         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
-    print(data)
     try:
-        print("Begin")
-        user = UserProfile.objects.create(
-            first_name=data['first_name'],
-            last_name=data['last_name'],
-            age=data['age'],
-            location=data['location'],
+        user = User.objects.create(
+            first_name=data['name'],
             username=data['email'],
             email=data['email'],
-            # password=make_password(data['password'])
-        )
-        print("End")
-
-        serializer = UserProfileSerializerWithToken(user, many=False)
-        return Response(serializer.data)
-    except:
-        message = {'detail': 'User with this email already exists'}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        
-@api_view(['POST'])
-def registerSurveyor(request):
-    data = request.data
-    try:
-        user = SurveyorProfile.objects.create(
-            institution_name=data['name'],
-            username=data['email'],
-            email=data['email'],
-            account_balance=data['account_balance'],
             password=make_password(data['password'])
         )
 
-        serializer = SurveyProfileSerializerWithToken(user, many=False)
+        serializer = UserSerializerWithToken(user, many=False)
         return Response(serializer.data)
     except:
-        message = {'detail': 'Surveyor with this email already exists'}
+        message = {'detail': 'User with this email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
