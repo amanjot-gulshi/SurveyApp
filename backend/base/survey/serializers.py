@@ -30,7 +30,7 @@ class SurveySerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         many=False,
         read_only=True,
-        slug_field='username'
+        slug_field='institution_name'
     )
 
     class Meta:
