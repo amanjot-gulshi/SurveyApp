@@ -34,7 +34,7 @@ function Header() {
                             <Nav.Link href="/create">Create</Nav.Link>
                             <Nav.Link href="/about">About</Nav.Link>
                                 {userInfo ? (
-                                    <NavDropdown title="Joe" id='username'>
+                                    <NavDropdown title={userInfo.first_name} id='username'>
                                         <LinkContainer to='/profile'>
                                             <NavDropdown.Item>Profile</NavDropdown.Item>
                                         </LinkContainer>

@@ -10,6 +10,7 @@ import RegisterScreen from './screens/RegisterScreen'
 import SingleSurveyScreen from './screens/SingleSurveyScreen'
 import CreateSurveyScreen from './screens/CreateSurveyScreen';
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/about" element={<AboutScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
+            <Route path="/profile" element={<ProfileScreen />} />
           </Routes>
         </Container>
       </main>

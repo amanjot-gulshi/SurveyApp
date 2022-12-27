@@ -29,56 +29,28 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-# @api_view(['POST'])
-# def registerUser(request):
-#     data = request.data
-#     print(data)
-#     try:
-#         print("Begin")
-#         user = UserProfile.objects.create(
-#             first_name=data['first_name'],
-#             last_name=data['last_name'],
-#             age=data['age'],
-#             location=data['location'],
-#             username=data['email'],
-#             email=data['email'],
-#             # password=make_password(data['password'])
-#         )
-#         print("End")
-
-#         serializer = UserProfileSerializerWithToken(user, many=False)
-#         return Response(serializer.data)
-#     except:
-#         message = {'detail': 'User with this email already exists'}
-#         return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        
-# @api_view(['POST'])
-# def registerSurveyor(request):
-#     data = request.data
-#     try:
-#         user = SurveyorProfile.objects.create(
-#             institution_name=data['name'],
-#             username=data['email'],
-#             email=data['email'],
-#             account_balance=data['account_balance'],
-#             password=make_password(data['password'])
-#         )
-
-#         serializer = SurveyProfileSerializerWithToken(user, many=False)
-#         return Response(serializer.data)
-#     except:
-#         message = {'detail': 'Surveyor with this email already exists'}
-#         return Response(message, status=status.HTTP_400_BAD_REQUEST)
-
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
+    print(data)
     try:
         user = User.objects.create(
-            first_name=data['name'],
+            first_name=data['first_name'],
+            last_name=data['last_name'],
             username=data['email'],
             email=data['email'],
             password=make_password(data['password'])
+        )
+
+        profile = UserProfile.objects.create(
+            user = user,
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            username=data['email'],
+            email=data['email'],
+            age=data['age'],
+            location=data['location'],
+            account_balance = 0
         )
 
         serializer = UserSerializerWithToken(user, many=False)
@@ -131,8 +103,8 @@ def updateSurveyorProfile(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):
-    user = request.user
-    serializer = UserProfileSerializer(user, many=False)
+    profile = UserProfile.objects.get(user=request.user)
+    serializer = UserProfileSerializer(profile, many=False)
     return Response(serializer.data)
 
 
@@ -148,7 +120,7 @@ def getUsers(request):
 @permission_classes([IsAdminUser])
 def getUserById(request, pk):
     user = User.objects.get(id=pk)
-    serializer = UserProfileSerializer(user, many=False)
+    serializer = User(instance=user, many=False)
     return Response(serializer.data)
 
 

@@ -63,7 +63,7 @@ export const listSurveyDetails = (id) => async (dispatch) => {
     }
 }
 
-export const deleteProduct = (id) => async (dispatch, getState) => {
+export const deleteSurvey = (id) => async (dispatch, getState) => {
     try {
         dispatch({
             type: SURVEY_DELETE_REQUEST

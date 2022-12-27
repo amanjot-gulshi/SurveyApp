@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin']
+        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name', 'isAdmin']
 
     def get__id(self, obj):
         return obj.id
@@ -32,7 +32,7 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin', 'token']
+        fields = '__all__'
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -45,7 +45,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['id', '_id', 'username', 'email', 'first_name', 'last_name' 'age', 'location', 'account_balance']
+        fields = ['_id', 'name','first_name', 'last_name', 'email', 'age', 'location', 'account_balance']
 
     def get__id(self, obj):
         return obj.id
@@ -57,25 +57,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         return name
 
-    def get_age(self, obj):
-        
-        return obj.age
-
-    def get_email(self, obj):
-        
-        return obj.email
-    
-    def get_location(self, obj):
-
-        return obj.location
-
 
 class UserProfileSerializerWithToken(UserProfileSerializer):
     token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = ['id', '_id', 'username', 'email', 'name', 'token']
+        fields = ['_id', 'name','first_name', 'last_name', 'email', 'age', 'location', 'account_balance', 'token']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -88,7 +76,7 @@ class SurveyorProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SurveyorProfile
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin']
+        fields = '__all__'
 
     def get__id(self, obj):
         return obj.id
@@ -108,7 +96,7 @@ class SurveyProfileSerializerWithToken(SurveyorProfileSerializer):
 
     class Meta:
         model = SurveyorProfile
-        fields = ['id', '_id', 'institution_name', 'email', 'token']
+        fields = '__all__'
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)

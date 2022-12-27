@@ -9,10 +9,11 @@ import Message from '../components/Message'
 function RegisterScreen() {
 
     const [firstName, setFirstName] = useState('')
-    // const [lastName, setLastName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    // const [age, setAge] = useState('')
-    // const [location, setLocation] = useState('')
+    const [age, setAge] = useState('')
+    const [location, setLocation] = useState('')
+
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState('')
@@ -39,7 +40,7 @@ function RegisterScreen() {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(register(firstName, email, password))
+            dispatch(register(firstName, lastName, age, location, email, password))
         }
     }
 
@@ -57,7 +58,7 @@ function RegisterScreen() {
                             {/* Makes POST request to /register route */}
                             <form action="/register" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                                 <div className="form-group">
-                                    <label>Name</label>
+                                    <label>First Name</label>
                                     <input
                                         onChange={(e) => setFirstName(e.target.value)}
                                         type="text"
@@ -65,12 +66,12 @@ function RegisterScreen() {
                                         value={firstName}
                                         className="form-control" />
                                 </div>
-                                {/* <div className="form-group">
+                                <div className="form-group">
                                     <label>Last Name</label>
                                     <input
                                         onChange={(e) => setLastName(e.target.value)}
                                         type="text"
-                                        name="last_name"
+                                        name="name"
                                         value={lastName}
                                         className="form-control" />
                                 </div>
@@ -78,8 +79,8 @@ function RegisterScreen() {
                                     <label>Age</label>
                                     <input
                                         onChange={(e) => setAge(e.target.value)}
-                                        type="number"
-                                        name="age"
+                                        type="text"
+                                        name="name"
                                         value={age}
                                         className="form-control" />
                                 </div>
@@ -88,10 +89,11 @@ function RegisterScreen() {
                                     <input
                                         onChange={(e) => setLocation(e.target.value)}
                                         type="text"
-                                        name="location"
+                                        name="name"
                                         value={location}
                                         className="form-control" />
-                                </div> */}
+                                </div>
+                            
                                 <div className="form-group">
                                     <label>Email</label>
                                     <input
