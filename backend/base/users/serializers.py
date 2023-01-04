@@ -45,7 +45,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['_id', 'name','first_name', 'last_name', 'email', 'age', 'location', 'account_balance']
+        fields = ['_id', 'name', 'first_name', 'last_name', 'email', 'age', 'location', 'account_balance']
 
     def get__id(self, obj):
         return obj.id
@@ -63,7 +63,7 @@ class UserProfileSerializerWithToken(UserProfileSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['_id', 'name','first_name', 'last_name', 'email', 'age', 'location', 'account_balance', 'token']
+        fields = ['_id', 'name','first_name', 'last_name', 'email', 'token']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)

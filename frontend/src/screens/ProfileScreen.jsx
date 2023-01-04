@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
@@ -21,10 +21,6 @@ function ProfileScreen() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    let urlLocation = useLocation();
-
-    const redirect = urlLocation.search ? urlLocation.search.split('=')[1] : '/'
-
     const userDetails = useSelector(state => state.userDetails)
     const { error, loading, user } = userDetails
 
@@ -42,17 +38,19 @@ function ProfileScreen() {
             if (!user || !user.name || success || userInfo._id !== user._id) {
                 dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
-            } 
-            else 
-            {
-                setFirstName(user.first_name)
-                setLastName(user.last_name)
-                setEmail(user.email)
-                setAge(user.age)
-                setLocation(user.location)
+
+                setFirstName(userInfo.first_name)
+                setLastName(userInfo.last_name)
+                setEmail(userInfo.email)
+
+                if (user) {
+                    setAge(user.age)
+                    setLocation(user.location)
+                }
             }
-        }
-    }, [dispatch, navigate, userInfo, user, success])
+        } 
+
+    }, [dispatch, navigate, userInfo, user.age, success])
 
     console.log(user)
 
@@ -62,6 +60,7 @@ function ProfileScreen() {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
+
             dispatch(updateUserProfile({
                 'id': user._id,
                 'first_name': firstName,
@@ -71,6 +70,7 @@ function ProfileScreen() {
                 'location': location,
                 'password': password
             }))
+
             setMessage('')
             navigate('/surveys')
         }
@@ -122,7 +122,7 @@ function ProfileScreen() {
                             onChange={(e) => setAge(e.target.value)}
                             type="number"
                             name="age"
-                            value={age}
+                            value={age || ''}
                             className="form-control" />
                     </div>
                     <div className="form-group">
@@ -131,7 +131,7 @@ function ProfileScreen() {
                             onChange={(e) => setLocation(e.target.value)}
                             type="text"
                             name="location"
-                            value={location}
+                            value={location || ''}
                             className="form-control" />
                     </div>
                     <div className="form-group">
