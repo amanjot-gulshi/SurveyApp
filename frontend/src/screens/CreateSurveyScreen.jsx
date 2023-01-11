@@ -17,10 +17,13 @@ function CreateSurveyScreen() {
     const [questions, setQuestions] = useState([]);
     const [questionEdit, setQuestionEdit] = useState({
         question: "",
-        option1: "",
-        option2: "",
-        option3: "",
-        option4: "",
+        choice: {
+            option1: "",
+            option2: "",
+            option3: "",
+            option4: ""
+        }
+
     });
 
     const [title, setTitle] = useState('')
@@ -42,9 +45,11 @@ function CreateSurveyScreen() {
     // console.log(userInfo)
 
     function addQuestion(newQuestion) {
+
         setQuestions((prevQuestions) => {
             return [...prevQuestions, newQuestion];
         });
+
     }
 
     function deleteQuestion(questionID) {
@@ -61,19 +66,19 @@ function CreateSurveyScreen() {
             return index === questionID;
         })
 
-        // console.log(found);
         setQuestionEdit(found);
-        // console.log(edit);
-        // console.log(questionEdit);
     }
 
     function clearInput() {
         setQuestionEdit({
             question: "",
-            option1: "",
-            option2: "",
-            option3: "",
-            option4: "",
+            choice: {
+                option1: "",
+                option2: "",
+                option3: "",
+                option4: ""
+            }
+
         });
     }
 
@@ -107,10 +112,10 @@ function CreateSurveyScreen() {
                     onAdd={addQuestion}
                     onClear={clearInput}
                     question={questionEdit.question}
-                    option1={questionEdit.option1}
-                    option2={questionEdit.option2}
-                    option3={questionEdit.option3}
-                    option4={questionEdit.option4}
+                    option1={questionEdit.choice.option1}
+                    option2={questionEdit.choice.option2}
+                    option3={questionEdit.choice.option3}
+                    option4={questionEdit.choice.option4}
                 />
 
                 {questions.map((question, index) => (
@@ -118,10 +123,10 @@ function CreateSurveyScreen() {
                         id={index}
                         key={index}
                         question={question.question}
-                        option1={question.option1}
-                        option2={question.option2}
-                        option3={question.option3}
-                        option4={question.option4}
+                        option1={question.choice.option1}
+                        option2={question.choice.option2}
+                        option3={question.choice.option3}
+                        option4={question.choice.option4}
                         onDelete={deleteQuestion}
                         onEdit={editQuestion}
                     />

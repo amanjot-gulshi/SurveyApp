@@ -44,28 +44,28 @@ def createSurvey(request):
             title=data['title']
 
         )
-        for question in data['questions']:
+        for ques in data['questions']:
             aQuestion = Question.objects.create(
-                question_text=question['question'],
-                survey = aSurvey
+                question_text=ques['question'],
+                survey=aSurvey
             )
-            choiceA = Choice.objects.create(
-               choice_text=question['option1'],
-               question = aQuestion
+            # print( question['choice']['option1'])
+            Choice.objects.create(
+                question=aQuestion,
+                choice_text=ques['choice']['option1']
             )
-            choiceB = Choice.objects.create(
-               choice_text=question['option2'],
-               question = aQuestion
+            Choice.objects.create(
+                question=aQuestion,
+                choice_text=ques['choice']['option2']
             )
-            choiceC = Choice.objects.create(
-               choice_text=question['option3'],
-               question = aQuestion
+            Choice.objects.create(
+                question=aQuestion,
+                choice_text=ques['choice']['option3']
             )
-            choiceD = Choice.objects.create(
-               choice_text=question['option4'],
-               question = aQuestion
+            Choice.objects.create(
+                question=aQuestion,
+                choice_text=ques['choice']['option4']
             )
-            
 
         serializer = SurveySerializer(aSurvey, many=False)
         return Response(serializer.data)
