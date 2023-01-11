@@ -4,15 +4,16 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from .serializers import UserProfileSerializerWithToken, UserProfileSerializer, SurveyorProfileSerializer, SurveyProfileSerializerWithToken, UserSerializerWithToken
+from .serializers import UserProfileSerializerWithToken, UserProfileSerializer, UserSerializerWithToken
 # Create your views here.
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .models import UserProfile, SurveyorProfile
+from .models import UserProfile
 
 
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -43,14 +44,14 @@ def registerUser(request):
         )
 
         profile = UserProfile.objects.create(
-            user = user,
+            user=user,
             first_name=data['first_name'],
             last_name=data['last_name'],
             username=data['email'],
             email=data['email'],
             age=data['age'],
             location=data['location'],
-            account_balance = 0
+            account_balance=0
         )
 
         serializer = UserSerializerWithToken(user, many=False)
@@ -58,6 +59,7 @@ def registerUser(request):
     except:
         message = {'detail': 'User with this email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -67,7 +69,7 @@ def updateUserProfile(request):
     serializer = UserProfileSerializerWithToken(user, many=False)
 
     data = request.data
-    
+
     profile = UserProfile.objects.get(email=user)
 
     user.first_name = data['first_name']
@@ -83,34 +85,12 @@ def updateUserProfile(request):
     profile.age = data['age']
     profile.location = data['location']
 
-    
-
     if data['password'] != '':
         user.password = make_password(data['password'])
         profile.passworl = make_password(data['password'])
 
     user.save()
     profile.save()
-
-    return Response(serializer.data)
-
-@api_view(['PUT'])
-@permission_classes([IsAuthenticated])
-def updateSurveyorProfile(request):
-    user = request.user
-    serializer = SurveyProfileSerializerWithToken(user, many=False)
-
-    data = request.data
-    user.institution_name = data['name']
-    user.username = data['email']
-    user.email = data['email']
-    user.location = data['location']
-    user.account_balance = data['account_balance']
-
-    if data['password'] != '':
-        user.password = make_password(data['password'])
-
-    user.save()
 
     return Response(serializer.data)
 

@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
-import { useEffect } from 'react';
 
 function ProfileScreen() {
 
@@ -39,20 +38,21 @@ function ProfileScreen() {
                 dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
 
-                setFirstName(userInfo.first_name)
-                setLastName(userInfo.last_name)
-                setEmail(userInfo.email)
+                setFirstName(user.first_name)
+                setLastName(user.last_name)
+                // setEmail(user.email)
+                setAge(user.age)
+                setLocation(user.location)
 
-                if (user) {
-                    setAge(user.age)
-                    setLocation(user.location)
-                }
             }
-        } 
 
-    }, [dispatch, navigate, userInfo, user.age, success])
+        }
 
-    console.log(user)
+    },
+        [dispatch, navigate, userInfo, user.age, success]
+    )
+
+    // console.log(user)
 
     async function submitHandler(e) {
         e.preventDefault()

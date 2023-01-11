@@ -7,14 +7,13 @@ from tokenize import blank_re
 from xmlrpc.client import DateTime
 from django.db import models
 from django.contrib.auth.models import User
-from users.models import UserProfile, SurveyorProfile
+from users.models import UserProfile
 
 # Create your models here.
 
 class Survey(models.Model):
-    author = models.ForeignKey(SurveyorProfile, on_delete=models.CASCADE)
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published', default=datetime.now)
 
     def __str__(self):
         return self.title

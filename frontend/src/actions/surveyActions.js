@@ -100,7 +100,7 @@ export const deleteSurvey = (id) => async (dispatch, getState) => {
     }
 }
 
-export const createSurvey = () => async (dispatch, getState) => {
+export const createSurvey = (email, title, questions) => async (dispatch, getState) => {
     try {
         dispatch({
             type: SURVEY_CREATE_REQUEST
@@ -118,8 +118,12 @@ export const createSurvey = () => async (dispatch, getState) => {
         }
 
         const { data } = await axios.post(
-            `/api/surveys/create/`,
-            {},
+            `/api/surveys/create`,
+            {
+                'email': email,
+                'title': title,
+                'questions': questions
+            },
             config
         )
         dispatch({

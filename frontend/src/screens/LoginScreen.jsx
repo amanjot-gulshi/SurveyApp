@@ -24,6 +24,7 @@ function LoginScreen() {
         if (userInfo) {
             navigate(redirect)
         }
+        // console.log(location)
     }, [navigate, userInfo, redirect])
 
 
@@ -31,6 +32,8 @@ function LoginScreen() {
         e.preventDefault()
 
         dispatch(login(email, password))
+        navigate(redirect)
+
     }
 
     return (

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import UserProfile, SurveyorProfile
+from .models import UserProfile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,7 +32,7 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'first_name', 'token']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -64,39 +64,6 @@ class UserProfileSerializerWithToken(UserProfileSerializer):
     class Meta:
         model = UserProfile
         fields = ['_id', 'name','first_name', 'last_name', 'email', 'token']
-
-    def get_token(self, obj):
-        token = RefreshToken.for_user(obj)
-        return str(token.access_token)
-
-class SurveyorProfileSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField(read_only=True)
-    _id = serializers.SerializerMethodField(read_only=True)
-    isAdmin = serializers.SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = SurveyorProfile
-        fields = '__all__'
-
-    def get__id(self, obj):
-        return obj.id
-
-    def get_isAdmin(self, obj):
-        return obj.is_staff
-
-    def get_name(self, obj):
-        name = obj.first_name
-        if name == '':
-            name = obj.email
-
-        return name
-
-class SurveyProfileSerializerWithToken(SurveyorProfileSerializer):
-    token = serializers.SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = SurveyorProfile
-        fields = '__all__'
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)

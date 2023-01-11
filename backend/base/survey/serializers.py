@@ -30,7 +30,7 @@ class SurveySerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         many=False,
         read_only=True,
-        slug_field='institution_name'
+        slug_field='first_name'
     )
 
     class Meta:
@@ -41,3 +41,14 @@ class SurveySerializer(serializers.ModelSerializer):
         questions = obj.question_set.all()
         serializer = QuestionSerializer(questions, many=True)
         return serializer.data
+
+class SurveySerializerWithToken(SurveySerializer):
+    token = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = SurveySerializer
+        fields = '__all__'
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)

@@ -5,10 +5,13 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
+import { useNavigate } from 'react-router-dom';
 
 import React, { useState } from 'react';
 
 function Header() {
+
+    const navigate = useNavigate()
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -17,6 +20,7 @@ function Header() {
 
     const logoutHandler = () => {
         dispatch(logout())
+        navigate('/surveys')
     }
 
 

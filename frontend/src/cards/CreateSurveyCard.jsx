@@ -59,7 +59,7 @@ function CreateSurveyCard(props) {
 
     return (
         <div>
-            <form className='question-input'>
+            <div className='question-input'>
                 <div>
                     <input placeholder="Question" onChange={handleOnChange} value={question.question} name="question" />
                 </div>
@@ -78,7 +78,7 @@ function CreateSurveyCard(props) {
                 </div>
 
                 <Button onClick={addOption} variant="text">Add</Button>
-            </form>
+            </div>
 
         </div>
     )
