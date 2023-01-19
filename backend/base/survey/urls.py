@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.getSurveys, name="surveys"),
     path('<str:pk>/', views.getSurvey, name="survey"),
-    path('create', views.createSurvey, name="create")
+    path('create', views.createSurvey, name="create"),
+    path('fill', views.fillSurvey, name="fill"),
 
 ]

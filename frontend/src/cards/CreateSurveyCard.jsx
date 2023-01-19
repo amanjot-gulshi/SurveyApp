@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Row, Col, Button } from 'react-bootstrap'
 
 function CreateSurveyCard(props) {
 
@@ -80,23 +80,23 @@ function CreateSurveyCard(props) {
         <div>
             <div className='question-input'>
                 <div>
-                    <input placeholder="Question" onChange={changeQuestion} value={question.question} name="question" />
+                    <input className='input-row surveys-row form-control' placeholder="Question" onChange={changeQuestion} value={question.question} name="question" />
                 </div>
 
                 <div>
-                    <input placeholder="Option" onChange={changeOption} value={question.choice.option1} name="option1" />
+                    <input className='input-row surveys-row form-control' placeholder="Option" onChange={changeOption} value={question.choice.option1} name="option1" />
                 </div>
                 <div>
-                    <input placeholder="Option" onChange={changeOption} value={question.choice.option2} name="option2" />
+                    <input className='input-row surveys-row form-control' placeholder="Option" onChange={changeOption} value={question.choice.option2} name="option2" />
                 </div>
                 <div>
-                    <input placeholder="Option" onChange={changeOption} value={question.choice.option3} name="option3" />
+                    <input className='input-row surveys-row form-control' placeholder="Option" onChange={changeOption} value={question.choice.option3} name="option3" />
                 </div>
                 <div>
-                    <input placeholder="Option" onChange={changeOption} value={question.choice.option4} name="option4" />
+                    <input className='input-row surveys-row form-control' placeholder="Option" onChange={changeOption} value={question.choice.option4} name="option4" />
                 </div>
 
-                <Button onClick={addOption} variant="text">Add</Button>
+                <Button className='add-button' onClick={addOption} variant="dark">Add</Button>
             </div>
 
         </div>

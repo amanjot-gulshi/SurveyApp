@@ -3,7 +3,7 @@ from dataclasses import field
 from itertools import product
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Survey, Question, Choice
+from .models import Survey, Question, Choice, FilledSurvey
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -52,3 +52,14 @@ class SurveySerializerWithToken(SurveySerializer):
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
         return str(token.access_token)
+
+
+class FilledSurveySerializer(serializers.ModelSerializer):
+    taker = serializers.SlugRelatedField(
+        many=False,
+        read_only=True,
+        slug_field='first_name'
+    )
+    class Meta:
+        model = FilledSurvey
+        fields = ['survey', 'taker', ]

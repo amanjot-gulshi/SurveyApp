@@ -94,18 +94,18 @@ function CreateSurveyScreen() {
 
             <h1>Create a Survey</h1>
             <form action="/create" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
-                <div>
+                <div className='create-buttons'>
                     <Link to={{
                         pathname: `/surveys`
                     }}>
-                        <Button variant="light">Discard</Button>
+                        <Button variant="dark">Discard</Button>
                     </Link>
 
-                    <Button onClick={handleSubmit} variant="light">Save</Button>
+                    <Button className='save-button' onClick={handleSubmit} variant="dark">Save</Button>
                 </div>
 
-                <div>
-                    <input placeholder="Title" onChange={(e) => { setTitle(e.target.value) }} value={title} name="title" />
+                <div className='title-input'>
+                    <input className='form-control' placeholder="Title" onChange={(e) => { setTitle(e.target.value) }} value={title} name="title" />
 
                 </div>
                 <CreateSurveyCard

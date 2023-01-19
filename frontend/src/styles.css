@@ -16,12 +16,14 @@ footer {
 
 .navbar{
   background-color: rgba(128, 128, 128, 0.09);
+  /* z-index: -1; */
+  position: relative;
 }
 
 /* SURVEY SCREEN  */
 
 .survey-screen {
-  margin: 100px 25px;
+  margin: 50px 25px;
 }
 
 .survey-screen h1 {
@@ -33,6 +35,10 @@ footer {
   width: 100%;
   margin-left: 0;
   margin-right: 0;
+}
+
+.survey-card {
+  margin-bottom: 20px;
 }
 
 /* SINGLE SURVEY SCREEN */
@@ -54,13 +60,30 @@ footer {
 
 /* CREATE SURVEY SCREEN */
 
-.create-survey{
+.create-buttons {
+  margin-bottom: 10px;
+}
+
+.add-button {
+  margin-bottom: 10px;
+}
+
+.surveys-row {
+  margin: 10px;
+}
+
+.title-input {
+  width: 80%;
+  margin: auto;
+}
+
+/* .create-survey{
   width: 80%;
   height: 1000px;
   margin: 100px auto;
   background-color: rgba(128, 128, 128, 0.09);
   border-radius: 10px;
-}
+} */
 
 .question-input{
   border: solid;
@@ -121,4 +144,20 @@ footer {
 
 .profile-screen{
   margin-top: 50px;
+}
+
+.save-button{
+  margin: 10px;
+}
+
+/* REGISTER SCREEN */
+
+.register-button {
+  margin: 10px;
+}
+
+/* LOGIN SCREEN */
+
+.login-button{
+  margin: 10px;
 }

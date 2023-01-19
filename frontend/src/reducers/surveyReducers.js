@@ -11,6 +11,10 @@ import {
     SURVEY_DELETE_SUCCESS,
     SURVEY_DELETE_FAIL,
 
+    SURVEY_FILL_REQUEST,
+    SURVEY_FILL_SUCCESS,
+    SURVEY_FILL_FAIL,
+
     SURVEY_CREATE_REQUEST,
     SURVEY_CREATE_SUCCESS,
     SURVEY_CREATE_FAIL,
@@ -112,6 +116,22 @@ export const surveyUpdateReducer = (state = { survey: {} }, action) => {
 
         case SURVEY_UPDATE_RESET:
             return { survey: {} }
+
+        default:
+            return state
+    }
+}
+
+export const surveyFillReducer = (state = {}, action) => {
+    switch (action.type) {
+        case SURVEY_FILL_REQUEST:
+            return { loading: true }
+
+        case SURVEY_FILL_SUCCESS:
+            return { loading: false, success: true, survey: action.payload }
+
+        case SURVEY_FILL_FAIL:
+            return { loading: false, error: action.payload }
 
         default:
             return state

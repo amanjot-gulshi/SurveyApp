@@ -66,7 +66,7 @@ function LoginScreen() {
                                     value={password} 
                                     onChange={(e) => setPassword(e.target.value)}/>
                                 </div>
-                                <button type="submit" className="btn btn-dark">Login</button>
+                                <button type="submit" className="btn btn-dark login-button">Login</button>
                             </form>
                             <Row className='py-3'>
                                 <Col>

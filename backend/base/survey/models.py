@@ -41,4 +41,14 @@ class Choice(models.Model):
 class FilledSurvey(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     taker = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    date_taken = models.DateTimeField('date taken')
+
+    def __str__(self):
+        return self.survey.title
+    
+
+class Answer(models.Model):
+    survey = models.ForeignKey(FilledSurvey, on_delete=models.CASCADE)
+    answer_text = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.answer_text

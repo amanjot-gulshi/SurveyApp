@@ -36,25 +36,27 @@ function Header() {
                             <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/surveys">Surveys</Nav.Link>
                             <Nav.Link href="/create">Create</Nav.Link>
-                            <Nav.Link href="/about">About</Nav.Link>
-                                {userInfo ? (
-                                    <NavDropdown title={userInfo.first_name} id='username'>
-                                        <LinkContainer to='/profile'>
-                                            <NavDropdown.Item>Profile</NavDropdown.Item>
-                                        </LinkContainer>
+                            {/* <Nav.Link href="/about">About</Nav.Link> */}
+                            {userInfo ? (
 
-                                        <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                                <NavDropdown title={userInfo.first_name} id='username'>
+                                    <LinkContainer to='/profile'>
+                                        <NavDropdown.Item>Profile</NavDropdown.Item>
+                                    </LinkContainer>
 
-                                    </NavDropdown>
-                                ) : (
-                                    <div>
-                                        <NavDropdown title="Account" id="basic-nav-dropdown">
+                                    <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+
+                                </NavDropdown>
+
+                            ) : (
+                                <div>
+                                    <NavDropdown title="Account" id="basic-nav-dropdown">
                                         <NavDropdown.Item href="/register">Register</NavDropdown.Item>
                                         <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-                                        </NavDropdown>
-                                    </div>
-                                )}
-                            
+                                    </NavDropdown>
+                                </div>
+                            )}
+
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Choice, Question, Survey, FilledSurvey
+from .models import Choice, Question, Survey, FilledSurvey, Answer
 
 
 class ChoiceInline(admin.TabularInline):
@@ -30,17 +30,22 @@ class SurveyAdmin(admin.ModelAdmin):
     inlines = [QuestionInline]
     search_fields = ['author']
 
+
+class AnswerInLine(admin.TabularInline):
+    model = Answer
+
 class FilledSurveyAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Taker',               {'fields': ['taker']}),
         ('Survey',               {'fields': ['survey']}),
 
     ]
-    
+    inlines = [AnswerInLine]
     search_fields = ['taker']
+
 
 admin.site.register(Question, QuestionAdmin)
 
 admin.site.register(Survey, SurveyAdmin)
 
-admin.site.register(FilledSurvey)
+admin.site.register(FilledSurvey, FilledSurveyAdmin)

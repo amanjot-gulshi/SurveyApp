@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from .models import Survey, Question, Choice
+from .models import Survey, Question, Choice, FilledSurvey, Answer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from .serializers import SurveySerializer, SurveySerializerWithToken
+from .serializers import SurveySerializer, FilledSurveySerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
@@ -72,3 +72,32 @@ def createSurvey(request):
     except:
         message = {'detail': 'Error with creating Survey'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def fillSurvey(request):
+    data = request.data
+    print(data)
+
+    # try:
+    profile = UserProfile.objects.get(email=data['taker'])
+    aSurvey = Survey.objects.get(title=data['title'])
+
+    filledSurvey = FilledSurvey.objects.create(
+        survey=aSurvey,
+        taker=profile,
+        )
+
+    for option in data['options'].values():
+        Answer.objects.create(
+            survey=filledSurvey,
+            answer_text=option
+        )
+
+    serializer = FilledSurveySerializer(filledSurvey, many=False)
+    return Response(serializer.data)
+
+    # except:
+    #     message = {'detail': 'Error filling out survey'}
+    #     return Response(message, status=status.HTTP_400_BAD_REQUEST)

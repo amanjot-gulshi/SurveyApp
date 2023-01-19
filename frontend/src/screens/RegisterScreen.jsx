@@ -121,7 +121,7 @@ function RegisterScreen() {
                                         value={confirmPassword}
                                         className="form-control" />
                                 </div>
-                                <button type="submit" className="btn btn-dark">Register</button>
+                                <button type="submit" className="btn btn-dark register-button">Register</button>
                             </form>
                             <Row className='py-3'>
                                 <Col>

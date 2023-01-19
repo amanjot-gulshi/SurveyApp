@@ -35,7 +35,7 @@ function SurveyScreen() {
                         <Row className="surveys-row">
                             {surveys.map((survey) => (
                                 <Col key={survey.id} sm="12" md="6" lg="6" xl="4" xxl="3">
-                                    <Card key={survey.id}>
+                                    <Card className='survey-card' key={survey.id}>
                                         <Card.Body>
                                             <Card.Title>{survey.title}</Card.Title>
                                             <Card.Subtitle>By {survey.author}</Card.Subtitle>
@@ -46,7 +46,7 @@ function SurveyScreen() {
                                             <Link to={{
                                                 pathname: `/surveys/${survey.id}`
                                             }}>
-                                                <Button className="survey-link" variant="light">Take Survey</Button>
+                                                <Button className="survey-link" variant="dark">Take Survey</Button>
                                             </Link>
 
                                         </Card.Body>

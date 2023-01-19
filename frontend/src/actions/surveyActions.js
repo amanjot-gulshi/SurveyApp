@@ -8,6 +8,10 @@ import {
     SURVEY_DETAILS_SUCCESS,
     SURVEY_DETAILS_FAIL,
 
+    SURVEY_FILL_REQUEST,
+    SURVEY_FILL_SUCCESS,
+    SURVEY_FILL_FAIL,
+
     SURVEY_DELETE_REQUEST,
     SURVEY_DELETE_SUCCESS,
     SURVEY_DELETE_FAIL,
@@ -179,6 +183,49 @@ export const updateSurvey = (survey) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: SURVEY_UPDATE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+
+export const fillSurvey = (title, author, taker, options) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: SURVEY_FILL_REQUEST
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.post(
+            `/api/surveys/fill`,
+            {
+                'author': author,
+                'title': title,
+                'taker': taker,
+                'options': options,
+            },
+            config
+        )
+        dispatch({
+            type: SURVEY_FILL_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error){
+        dispatch({
+            type: SURVEY_FILL_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message,

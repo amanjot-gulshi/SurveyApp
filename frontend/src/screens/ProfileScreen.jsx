@@ -152,7 +152,7 @@ function ProfileScreen() {
                             value={confirmPassword}
                             className="form-control" />
                     </div>
-                    <button type="submit" className="btn btn-dark">Save</button>
+                    <button type="submit" className="btn btn-dark save-button">Save</button>
                 </form>
 
             </div>
