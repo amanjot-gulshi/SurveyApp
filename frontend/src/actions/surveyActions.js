@@ -4,6 +4,10 @@ import {
     SURVEY_LIST_SUCCESS,
     SURVEY_LIST_FAIL,
 
+    MY_SURVEY_LIST_REQUEST,
+    MY_SURVEY_LIST_SUCCESS,
+    MY_SURVEY_LIST_FAIL,
+
     SURVEY_DETAILS_REQUEST,
     SURVEY_DETAILS_SUCCESS,
     SURVEY_DETAILS_FAIL,
@@ -11,6 +15,10 @@ import {
     SURVEY_FILL_REQUEST,
     SURVEY_FILL_SUCCESS,
     SURVEY_FILL_FAIL,
+
+    SURVEY_FILLED_LIST_REQUEST,
+    SURVEY_FILLED_LIST_SUCCESS,
+    SURVEY_FILLED_LIST_FAIL,
 
     SURVEY_DELETE_REQUEST,
     SURVEY_DELETE_SUCCESS,
@@ -25,11 +33,11 @@ import {
     SURVEY_UPDATE_FAIL,
 } from '../constants/surveyConstants'
 
-export const listSurveys = (keyword = '') => async (dispatch) => {
+export const listSurveys = () => async (dispatch) => {
     try {
         dispatch({ type: SURVEY_LIST_REQUEST })
 
-        const { data } = await axios.get(`/api/surveys${keyword}`)
+        const { data } = await axios.get(`/api/surveys/`)
 
         dispatch({
             type: SURVEY_LIST_SUCCESS,
@@ -46,11 +54,39 @@ export const listSurveys = (keyword = '') => async (dispatch) => {
     }
 }
 
-export const listSurveyDetails = (id) => async (dispatch) => {
+export const listMySurveys = (user) => async (dispatch) => {
+    try {
+        dispatch({ type: MY_SURVEY_LIST_REQUEST })
+
+        var params = new URLSearchParams();
+        params.append("user", user);
+        var request = {
+            params: params
+        }
+
+        const { data } = await axios.get(`/api/surveys/my-surveys`, request
+        )
+
+        dispatch({
+            type: MY_SURVEY_LIST_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: MY_SURVEY_LIST_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+export const listSurveyDetails = (id, title) => async (dispatch) => {
     try {
         dispatch({ type: SURVEY_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/api/surveys/${id}`)
+        const { data } = await axios.get(`/api/surveys/${id}/${title}`)
 
         dispatch({
             type: SURVEY_DETAILS_SUCCESS,
@@ -223,7 +259,7 @@ export const fillSurvey = (title, author, taker, options) => async (dispatch, ge
             payload: data,
         })
 
-    } catch (error){
+    } catch (error) {
         dispatch({
             type: SURVEY_FILL_FAIL,
             payload: error.response && error.response.data.detail

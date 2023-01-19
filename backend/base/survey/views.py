@@ -21,9 +21,23 @@ def getSurveys(request):
 
     return Response({'surveys': serializer.data})
 
+@api_view(['GET'])
+def getMySurveys(request):
+    data = request.GET
+    print(data['user'])
+
+    profile = UserProfile.objects.get(email=data['user'])
+
+    surveys = Survey.objects.filter(author=profile)
+
+    serializer = SurveySerializer(surveys, many=True)
+
+    return Response({'surveys': serializer.data})
+
+
 
 @api_view(['GET'])
-def getSurvey(request, pk):
+def getSurvey(request, pk, title):
 
     survey = Survey.objects.get(id=pk)
 
@@ -80,24 +94,39 @@ def fillSurvey(request):
     data = request.data
     print(data)
 
-    # try:
-    profile = UserProfile.objects.get(email=data['taker'])
-    aSurvey = Survey.objects.get(title=data['title'])
+    try:
+        profile = UserProfile.objects.get(email=data['taker'])
+        aSurvey = Survey.objects.get(title=data['title'])
 
-    filledSurvey = FilledSurvey.objects.create(
-        survey=aSurvey,
-        taker=profile,
+        filledSurvey = FilledSurvey.objects.create(
+            survey=aSurvey,
+            taker=profile,
         )
 
-    for option in data['options'].values():
-        Answer.objects.create(
-            survey=filledSurvey,
-            answer_text=option
-        )
+        for option in data['options'].values():
+            Answer.objects.create(
+                survey=filledSurvey,
+                answer_text=option
+            )
 
-    serializer = FilledSurveySerializer(filledSurvey, many=False)
-    return Response(serializer.data)
+        serializer = FilledSurveySerializer(filledSurvey, many=False)
+        return Response(serializer.data)
 
-    # except:
-    #     message = {'detail': 'Error filling out survey'}
-    #     return Response(message, status=status.HTTP_400_BAD_REQUEST)
+    except:
+        message = {'detail': 'Error filling out survey'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getFilledSurveys(request):
+
+    data = request.data
+
+    surveys = FilledSurvey.objects.filter(taker=data['email'])
+
+    serializer = FilledSurveySerializer(surveys, many=True)
+
+    return Response({'surveys': serializer.data})

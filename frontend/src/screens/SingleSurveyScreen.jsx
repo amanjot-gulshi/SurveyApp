@@ -20,7 +20,7 @@ function SingleSurveyScreen() {
     const [options, setOptions] = useState({})
     const [message, setMessage] = useState('')
 
-    const { id } = useParams();
+    const { id, title } = useParams();
     const navigate = useNavigate();
 
     const dispatch = useDispatch()
@@ -30,7 +30,7 @@ function SingleSurveyScreen() {
 
     let urlLocation = useLocation();
 
-    const redirect = urlLocation.search ? urlLocation.search.split('=')[1] : `/surveys/${id}`
+    const redirect = urlLocation.search ? urlLocation.search.split('=')[1] : `/surveys/${id}/${title}`
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -41,7 +41,7 @@ function SingleSurveyScreen() {
         }
         // window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        dispatch(listSurveyDetails(id))
+        dispatch(listSurveyDetails(id, title))
 
     }, [dispatch, id])
 

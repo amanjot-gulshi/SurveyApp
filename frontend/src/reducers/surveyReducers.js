@@ -3,6 +3,10 @@ import {
     SURVEY_LIST_SUCCESS,
     SURVEY_LIST_FAIL,
 
+    MY_SURVEY_LIST_REQUEST,
+    MY_SURVEY_LIST_SUCCESS,
+    MY_SURVEY_LIST_FAIL,
+
     SURVEY_DETAILS_REQUEST,
     SURVEY_DETAILS_SUCCESS,
     SURVEY_DETAILS_FAIL,
@@ -14,6 +18,10 @@ import {
     SURVEY_FILL_REQUEST,
     SURVEY_FILL_SUCCESS,
     SURVEY_FILL_FAIL,
+
+    SURVEY_FILLED_LIST_REQUEST,
+    SURVEY_FILLED_LIST_SUCCESS,
+    SURVEY_FILLED_LIST_FAIL,
 
     SURVEY_CREATE_REQUEST,
     SURVEY_CREATE_SUCCESS,
@@ -39,6 +47,25 @@ export const surveyListReducer = (state = { surveys: [] }, action) => {
             }
 
         case SURVEY_LIST_FAIL:
+            return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const mySurveyListReducer = (state = { surveys: [] }, action) => {
+    switch (action.type) {
+        case MY_SURVEY_LIST_REQUEST:
+            return { loading: true, surveys: [] }
+
+        case MY_SURVEY_LIST_SUCCESS:
+            return {
+                loading: false,
+                surveys: action.payload.surveys,
+            }
+
+        case MY_SURVEY_LIST_FAIL:
             return { loading: false, error: action.payload }
 
         default:

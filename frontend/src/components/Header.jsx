@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions'
 import { useNavigate } from 'react-router-dom';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 function Header() {
 
@@ -33,10 +33,9 @@ function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="m-auto">
                             <Navbar.Brand href="/">SurveyApp</Navbar.Brand>
-                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link href="/my-surveys">Home</Nav.Link>
                             <Nav.Link href="/surveys">Surveys</Nav.Link>
-                            <Nav.Link href="/create">Create</Nav.Link>
-                            {/* <Nav.Link href="/about">About</Nav.Link> */}
+                            {userInfo && (<Nav.Link href="/create">Create</Nav.Link>)}
                             {userInfo ? (
 
                                 <NavDropdown title={userInfo.first_name} id='username'>

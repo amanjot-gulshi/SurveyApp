@@ -44,7 +44,7 @@ function SurveyScreen() {
                                             </Card.Text>
 
                                             <Link to={{
-                                                pathname: `/surveys/${survey.id}`
+                                                pathname: `/surveys/${survey.id}/${survey.title}`
                                             }}>
                                                 <Button className="survey-link" variant="dark">Take Survey</Button>
                                             </Link>
