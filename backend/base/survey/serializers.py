@@ -3,7 +3,7 @@ from dataclasses import field
 from itertools import product
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Survey, Question, Choice, FilledSurvey
+from .models import Survey, Question, Choice, FilledSurvey, Answer
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -11,6 +11,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Choice
         fields = ('choice_text', 'question')
+
 
 class QuestionSerializer(serializers.ModelSerializer):
     choices = serializers.SerializerMethodField(read_only=True)
@@ -42,6 +43,7 @@ class SurveySerializer(serializers.ModelSerializer):
         serializer = QuestionSerializer(questions, many=True)
         return serializer.data
 
+
 class SurveySerializerWithToken(SurveySerializer):
     token = serializers.SerializerMethodField(read_only=True)
 
@@ -54,12 +56,31 @@ class SurveySerializerWithToken(SurveySerializer):
         return str(token.access_token)
 
 
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ('answer_text', 'survey')
+
+
 class FilledSurveySerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField(read_only=True)
     taker = serializers.SlugRelatedField(
         many=False,
         read_only=True,
         slug_field='first_name'
     )
+    survey = serializers.SlugRelatedField(
+        read_only=True,
+        many=False,
+        slug_field='title')
+
     class Meta:
         model = FilledSurvey
-        fields = ['survey', 'taker', ]
+        fields = '__all__'
+
+    def get_answers(self, obj):
+        answers = obj.answer_set.all()
+        serializer = AnswerSerializer(answers, many=True)
+        return serializer.data
+
+

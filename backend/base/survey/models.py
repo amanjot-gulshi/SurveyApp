@@ -18,6 +18,9 @@ class Survey(models.Model):
     def __str__(self):
         return self.title
 
+    def get_author(self):
+        return self.author
+
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200, blank=True)

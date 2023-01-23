@@ -13,8 +13,12 @@ footer {
   height: 60px;
   margin-top: 100px;
 }
+#root {
+  background-color: #ffffff;
+  background-image: url("https://www.transparenttextures.com/patterns/diagmonds-light.png");
+}
 
-.navbar{
+.navbar {
   background-color: rgba(128, 128, 128, 0.09);
   /* z-index: -1; */
   position: relative;
@@ -37,6 +41,10 @@ footer {
   margin-right: 0;
 }
 
+.surveys-row button {
+  margin: 0px 10px;
+}
+
 .survey-card {
   margin-bottom: 20px;
 }
@@ -47,14 +55,14 @@ footer {
   margin: 100px auto;
 }
 
-.css-e53awj-MuiStack-root{
+.css-e53awj-MuiStack-root {
   justify-content: center;
   width: 100%;
   margin-left: 0;
   margin-right: 0;
 }
 
-.choice-radio{
+.choice-radio {
   align-content: center;
 }
 
@@ -85,7 +93,7 @@ footer {
   border-radius: 10px;
 } */
 
-.question-input{
+.question-input {
   border: solid;
   border-radius: 10px;
   border-color: rgba(128, 128, 128, 0.299);
@@ -93,7 +101,7 @@ footer {
   margin: 20px auto;
 }
 
-.add-option-control{
+.add-option-control {
   margin-top: 50px;
 }
 
@@ -127,14 +135,14 @@ footer {
   border: none;
 }
 
-.input-row{
+.input-row {
   justify-content: center;
   width: 100%;
   margin-left: 0;
   margin-right: 0;
 }
 
-.input-col{
+.input-col {
   margin-right: 0;
   margin-left: 0;
   width: 100%;
@@ -142,11 +150,11 @@ footer {
 
 /* PROFILE SCREEN */
 
-.profile-screen{
+.profile-screen {
   margin-top: 50px;
 }
 
-.save-button{
+.save-button {
   margin: 10px;
 }
 
@@ -158,6 +166,11 @@ footer {
 
 /* LOGIN SCREEN */
 
-.login-button{
+.login-button {
   margin: 10px;
+}
+
+.App h1{
+  margin: 50px 25px;
+
 }

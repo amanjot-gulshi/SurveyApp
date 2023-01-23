@@ -120,13 +120,34 @@ def fillSurvey(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def getFilledSurveys(request):
 
-    data = request.data
+    data = request.GET
+    print(data['user'])
 
-    surveys = FilledSurvey.objects.filter(taker=data['email'])
+    profile = UserProfile.objects.get(email=data['user'])
+
+    surveys = FilledSurvey.objects.filter(taker=profile)
 
     serializer = FilledSurveySerializer(surveys, many=True)
 
-    return Response({'surveys': serializer.data})
+    return Response({'survey': serializer.data})
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateSurvey(request, pk):
+    data = request.data
+    survey = Survey.objects.get(_id=pk)
+
+
+    serializer = SurveySerializer(survey, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteSurvey(request, pk):
+    survey = Survey.objects.get(id=pk)
+    survey.delete()
+    return Response('Producted Deleted')
+

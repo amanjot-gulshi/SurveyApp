@@ -20,6 +20,7 @@ import {
     surveyUpdateReducer,
     surveyCreateReducer,
     surveyFillReducer,
+    myFilledSurveyListReducer
 } from './reducers/surveyReducers'
 
 
@@ -39,6 +40,7 @@ const reducer = combineReducers({
     surveyUpdate: surveyUpdateReducer,
     surveyCreate: surveyCreateReducer,
     surveyFill:surveyFillReducer,
+    myFilledSurveyList:myFilledSurveyListReducer,
 
 })
 

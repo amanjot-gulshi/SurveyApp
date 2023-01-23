@@ -43,7 +43,7 @@ function SingleSurveyScreen() {
 
         dispatch(listSurveyDetails(id, title))
 
-    }, [dispatch, id])
+    }, [dispatch, id, navigate, redirect, title, userInfo.name])
 
     // console.log(survey)
 
@@ -116,7 +116,8 @@ function SingleSurveyScreen() {
                                             <Button variant="dark">
                                                 Cancel</Button>
                                         </Link>
-                                        <Button type="submit" className='submit-button' variant="dark" style={{ marginLeft: "100px" }}>Submit</Button>
+                                        {userInfo.name === survey.author ? "" : (<Button type="submit" className='submit-button' variant="dark" style={{ marginLeft: "100px" }}>Submit</Button>)}
+                                        
                                     </Stack>
                                 </div>
                             </form>

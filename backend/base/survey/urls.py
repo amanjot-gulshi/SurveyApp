@@ -9,5 +9,7 @@ urlpatterns = [
     path('filled-surveys/', views.getFilledSurveys, name='filled-surveys'),
     path('create', views.createSurvey, name="create"),
     path('fill', views.fillSurvey, name="fill"),
+    path('update/<str:pk>/', views.updateSurvey, name="product-update"),
+    path('delete/<int:pk>/', views.deleteSurvey, name="survey-delete"),
 
 ]

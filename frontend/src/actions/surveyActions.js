@@ -16,9 +16,9 @@ import {
     SURVEY_FILL_SUCCESS,
     SURVEY_FILL_FAIL,
 
-    SURVEY_FILLED_LIST_REQUEST,
-    SURVEY_FILLED_LIST_SUCCESS,
-    SURVEY_FILLED_LIST_FAIL,
+    MY_FILLED_SURVEY_LIST_REQUEST,
+    MY_FILLED_SURVEY_LIST_SUCCESS,
+    MY_FILLED_SURVEY_LIST_FAIL,
 
     SURVEY_DELETE_REQUEST,
     SURVEY_DELETE_SUCCESS,
@@ -262,6 +262,34 @@ export const fillSurvey = (title, author, taker, options) => async (dispatch, ge
     } catch (error) {
         dispatch({
             type: SURVEY_FILL_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+export const listFilledSurveys = (user) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: MY_FILLED_SURVEY_LIST_REQUEST })
+
+        var params = new URLSearchParams();
+        params.append("user", user);
+        var request = {
+            params: params
+        }
+
+        const { data } = await axios.get(`/api/surveys/filled-surveys`, request
+        )
+
+        dispatch({
+            type: MY_FILLED_SURVEY_LIST_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: MY_FILLED_SURVEY_LIST_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message,

@@ -19,9 +19,9 @@ import {
     SURVEY_FILL_SUCCESS,
     SURVEY_FILL_FAIL,
 
-    SURVEY_FILLED_LIST_REQUEST,
-    SURVEY_FILLED_LIST_SUCCESS,
-    SURVEY_FILLED_LIST_FAIL,
+    MY_FILLED_SURVEY_LIST_REQUEST,
+    MY_FILLED_SURVEY_LIST_SUCCESS,
+    MY_FILLED_SURVEY_LIST_FAIL,
 
     SURVEY_CREATE_REQUEST,
     SURVEY_CREATE_SUCCESS,
@@ -159,6 +159,25 @@ export const surveyFillReducer = (state = {}, action) => {
 
         case SURVEY_FILL_FAIL:
             return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const myFilledSurveyListReducer = (state = { survey: [] }, action) => {
+    switch (action.type) {
+        case MY_FILLED_SURVEY_LIST_REQUEST:
+            return { fLoading: true }
+
+        case MY_FILLED_SURVEY_LIST_SUCCESS:
+            return {
+                fLoading: false,
+                fSurvey: action.payload.survey,
+            }
+
+        case MY_FILLED_SURVEY_LIST_FAIL:
+            return { fLoading: false, fError: action.payload }
 
         default:
             return state

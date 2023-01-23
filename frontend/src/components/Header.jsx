@@ -32,7 +32,7 @@ function Header() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="m-auto">
-                            <Navbar.Brand href="/">SurveyApp</Navbar.Brand>
+                            <Navbar.Brand>SurveyApp</Navbar.Brand>
                             <Nav.Link href="/my-surveys">Home</Nav.Link>
                             <Nav.Link href="/surveys">Surveys</Nav.Link>
                             {userInfo && (<Nav.Link href="/create">Create</Nav.Link>)}
