@@ -1,16 +1,12 @@
-from django.shortcuts import render
 from .models import Survey, Question, Choice, FilledSurvey, Answer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from .serializers import SurveySerializer, FilledSurveySerializer
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status
 from users.models import UserProfile
 
 # Create your views here.
-
 
 @api_view(['GET'])
 def getSurveys(request):
@@ -20,6 +16,7 @@ def getSurveys(request):
     serializer = SurveySerializer(surveys, many=True)
 
     return Response({'surveys': serializer.data})
+
 
 @api_view(['GET'])
 def getMySurveys(request):
@@ -117,8 +114,6 @@ def fillSurvey(request):
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
 @api_view(['GET'])
 def getFilledSurveys(request):
 
@@ -133,13 +128,11 @@ def getFilledSurveys(request):
 
     return Response({'survey': serializer.data})
 
+
 @api_view(['PUT'])
-@permission_classes([IsAdminUser])
+@permission_classes([IsAuthenticated])
 def updateSurvey(request, pk):
-    data = request.data
     survey = Survey.objects.get(_id=pk)
-
-
     serializer = SurveySerializer(survey, many=False)
     return Response(serializer.data)
 

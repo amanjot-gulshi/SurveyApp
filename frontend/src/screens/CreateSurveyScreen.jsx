@@ -15,6 +15,7 @@ function CreateSurveyScreen() {
 
     const [message, setMessage] = useState('')
     const [questions, setQuestions] = useState([]);
+    const [count, setCount] = useState(4)
     const [questionEdit, setQuestionEdit] = useState({
         question: "",
         choice: {

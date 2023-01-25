@@ -19,7 +19,7 @@ function App() {
       <main className="py-3">
         <Container>
           <Routes>
-            <Route exact path="/my-surveys" element={<HomeScreen />} />
+            <Route exact path="/" element={<HomeScreen />} />
             <Route path="/surveys" element={<SurveyScreen />} />
             <Route path="/surveys/:id/:title" element={<SingleSurveyScreen />} />
             <Route path="/create" element={<CreateSurveyScreen />} />

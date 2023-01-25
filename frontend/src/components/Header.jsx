@@ -33,7 +33,7 @@ function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="m-auto">
                             <Navbar.Brand>SurveyApp</Navbar.Brand>
-                            <Nav.Link href="/my-surveys">Home</Nav.Link>
+                            <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/surveys">Surveys</Nav.Link>
                             {userInfo && (<Nav.Link href="/create">Create</Nav.Link>)}
                             {userInfo ? (

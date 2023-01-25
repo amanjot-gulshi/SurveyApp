@@ -49,9 +49,6 @@ def registerUser(request):
             last_name=data['last_name'],
             username=data['email'],
             email=data['email'],
-            age=data['age'],
-            location=data['location'],
-            account_balance=0
         )
 
         serializer = UserSerializerWithToken(user, many=False)
@@ -81,9 +78,6 @@ def updateUserProfile(request):
     user.email = data['email']
     user.username = data['email']
     profile.email = data['email']
-
-    profile.age = data['age']
-    profile.location = data['location']
 
     if data['password'] != '':
         user.password = make_password(data['password'])
@@ -139,7 +133,7 @@ def updateUser(request, pk):
 
 
 @api_view(['DELETE'])
-@permission_classes([IsAdminUser])
+@permission_classes([IsAuthenticated])
 def deleteUser(request, pk):
     userForDeletion = User.objects.get(id=pk)
     userForDeletion.delete()

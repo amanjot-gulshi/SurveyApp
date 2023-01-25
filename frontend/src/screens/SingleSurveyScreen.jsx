@@ -39,11 +39,10 @@ function SingleSurveyScreen() {
         if (!userInfo) {
             navigate(`/login?redirect=${redirect}`)
         }
-        // window.scrollTo({ top: 0, behavior: 'smooth' });
 
         dispatch(listSurveyDetails(id, title))
 
-    }, [dispatch, id, navigate, redirect, title, userInfo.name])
+    }, [dispatch, id, navigate, redirect, title, userInfo])
 
     // console.log(survey)
 
@@ -62,7 +61,7 @@ function SingleSurveyScreen() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        if (Object.keys(options).length == survey.questions.length) {
+        if (Object.keys(options).length === survey.questions.length) {
             dispatch(fillSurvey(survey.title, survey.author, userInfo.email, options))
             navigate('/surveys')
         } else {
@@ -87,8 +86,7 @@ function SingleSurveyScreen() {
                             <hr />
                             <form onSubmit={handleSubmit}>
                                 {survey && survey.questions && survey.questions.map((question, index) => (
-                                    <div>
-
+                                    <div className='survey-question'>
                                         <FormControl key={index}>
                                             <FormLabel id="demo-radio-buttons-group-label">{question.question_text}</FormLabel>
                                             <RadioGroup
@@ -96,7 +94,6 @@ function SingleSurveyScreen() {
                                                 aria-labelledby="demo-radio-buttons-group-label"
                                                 defaultValue="female"
                                                 onChange={handleOnChange}
-
                                             >
                                                 {question.choices.map((option) => (
                                                     <FormControlLabel name={question.question_text} value={option.choice_text} control={<Radio />} label={option.choice_text} />
@@ -116,7 +113,7 @@ function SingleSurveyScreen() {
                                             <Button variant="dark">
                                                 Cancel</Button>
                                         </Link>
-                                        {userInfo.name === survey.author ? "" : (<Button type="submit" className='submit-button' variant="dark" style={{ marginLeft: "100px" }}>Submit</Button>)}
+                                        {userInfo && userInfo.name === survey.author ? "" : (<Button type="submit" className='submit-button' variant="dark" style={{ marginLeft: "100px" }}>Submit</Button>)}
                                         
                                     </Stack>
                                 </div>

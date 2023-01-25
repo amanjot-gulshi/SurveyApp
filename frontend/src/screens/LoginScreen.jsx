@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import { login } from '../actions/userActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -15,7 +15,7 @@ function LoginScreen() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const redirect = location.search ? location.search.split('=')[1] : '/surveys'
 
     const userLogin = useSelector(state => state.userLogin)
     const { error, loading, userInfo } = userLogin
@@ -24,17 +24,21 @@ function LoginScreen() {
         if (userInfo) {
             navigate(redirect)
         }
-        // console.log(location)
     }, [navigate, userInfo, redirect])
 
 
     function handleSubmit(e) {
         e.preventDefault()
 
-        dispatch(login(email, password))
-        navigate(redirect)
+        dispatch(login(email, password)).catch(function(err){
+            if (!err){
+                navigate('/')
+            }
+        })
 
     }
+
+
 
     return (
         <div className="container mt-5">
@@ -50,23 +54,23 @@ function LoginScreen() {
                             <form action="/login" method="POST" onSubmit={handleSubmit}>
                                 <div className="form-group">
                                     <label>Email</label>
-                                    <input 
-                                    type="email" 
-                                    className="form-control" 
-                                    name="username" value={email} 
-                                    onChange={(e) => setEmail(e.target.value)}/>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        name="username" value={email}
+                                        onChange={(e) => setEmail(e.target.value)} />
                                 </div>
 
                                 <div className="form-group">
                                     <label>Password</label>
-                                    <input 
-                                    type="password" 
-                                    className="form-control"
-                                    name="password" 
-                                    value={password} 
-                                    onChange={(e) => setPassword(e.target.value)}/>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        name="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)} />
                                 </div>
-                                <button type="submit" className="btn btn-dark login-button">Login</button>
+                                <Button type="submit" className="btn btn-dark login-button">Login</Button>
                             </form>
                             <Row className='py-3'>
                                 <Col>

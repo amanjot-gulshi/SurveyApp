@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import { register } from '../actions/userActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -11,8 +11,6 @@ function RegisterScreen() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [age, setAge] = useState('')
-    const [location, setLocation] = useState('')
 
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -40,7 +38,7 @@ function RegisterScreen() {
         if (password !== confirmPassword) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(register(firstName, lastName, age, location, email, password))
+            dispatch(register(firstName, lastName, email, password))
         }
     }
 
@@ -75,25 +73,7 @@ function RegisterScreen() {
                                         value={lastName}
                                         className="form-control" />
                                 </div>
-                                <div className="form-group">
-                                    <label>Age</label>
-                                    <input
-                                        onChange={(e) => setAge(e.target.value)}
-                                        type="text"
-                                        name="name"
-                                        value={age}
-                                        className="form-control" />
-                                </div>
-                                <div className="form-group">
-                                    <label>Location</label>
-                                    <input
-                                        onChange={(e) => setLocation(e.target.value)}
-                                        type="text"
-                                        name="name"
-                                        value={location}
-                                        className="form-control" />
-                                </div>
-                            
+                                                           
                                 <div className="form-group">
                                     <label>Email</label>
                                     <input
@@ -121,7 +101,7 @@ function RegisterScreen() {
                                         value={confirmPassword}
                                         className="form-control" />
                                 </div>
-                                <button type="submit" className="btn btn-dark register-button">Register</button>
+                                <Button type="submit" className="btn btn-dark register-button">Register</Button>
                             </form>
                             <Row className='py-3'>
                                 <Col>

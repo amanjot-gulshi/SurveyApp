@@ -3,16 +3,15 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { getUserDetails, updateUserProfile, deleteUser, logout } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+import { Button } from 'react-bootstrap';
 
 function ProfileScreen() {
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [age, setAge] = useState('')
-    const [location, setLocation] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState('')
@@ -40,16 +39,12 @@ function ProfileScreen() {
 
                 setFirstName(user.first_name)
                 setLastName(user.last_name)
-                // setEmail(user.email)
-                setAge(user.age)
-                setLocation(user.location)
-
             }
 
         }
 
     },
-        [dispatch, navigate, userInfo, user.age, success]
+        [dispatch, navigate, userInfo, user.name, success]
     )
 
     // console.log(user)
@@ -66,8 +61,6 @@ function ProfileScreen() {
                 'first_name': firstName,
                 'last_name': lastName,
                 'email': email,
-                'age': age,
-                'location': location,
                 'password': password
             }))
 
@@ -75,6 +68,13 @@ function ProfileScreen() {
             navigate('/surveys')
         }
 
+    }
+
+    function handleDeleteUser(e){
+        e.preventDefault()
+        dispatch(deleteUser(userInfo._id))
+        dispatch(logout())
+        
     }
 
     return (
@@ -117,24 +117,6 @@ function ProfileScreen() {
                             className="form-control" />
                     </div>
                     <div className="form-group">
-                        <label>Age</label>
-                        <input
-                            onChange={(e) => setAge(e.target.value)}
-                            type="number"
-                            name="age"
-                            value={age || ''}
-                            className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label>Location</label>
-                        <input
-                            onChange={(e) => setLocation(e.target.value)}
-                            type="text"
-                            name="location"
-                            value={location || ''}
-                            className="form-control" />
-                    </div>
-                    <div className="form-group">
                         <label>Password</label>
                         <input
                             onChange={(e) => setPassword(e.target.value)}
@@ -152,8 +134,10 @@ function ProfileScreen() {
                             value={confirmPassword}
                             className="form-control" />
                     </div>
-                    <button type="submit" className="btn btn-dark save-button">Save</button>
+                    <Button type="submit" className="btn btn-dark save-button">Save</Button>
+                    <Button onClick={handleDeleteUser} className="btn btn-dark delete-account-button">Delete Account</Button>
                 </form>
+                
 
             </div>
         </div>
