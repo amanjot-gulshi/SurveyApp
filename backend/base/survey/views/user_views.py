@@ -4,11 +4,10 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from .serializers import UserProfileSerializerWithToken, UserProfileSerializer, UserSerializerWithToken
+from ..serializers import UserSerializerWithToken, UserSerializer
 # Create your views here.
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .models import UserProfile
 
 
 from django.contrib.auth.hashers import make_password
@@ -19,7 +18,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        serializer = UserProfileSerializerWithToken(self.user).data
+        serializer = UserSerializerWithToken(self.user).data
         for k, v in serializer.items():
             data[k] = v
 
@@ -43,14 +42,6 @@ def registerUser(request):
             password=make_password(data['password'])
         )
 
-        profile = UserProfile.objects.create(
-            user=user,
-            first_name=data['first_name'],
-            last_name=data['last_name'],
-            username=data['email'],
-            email=data['email'],
-        )
-
         serializer = UserSerializerWithToken(user, many=False)
         return Response(serializer.data)
     except:
@@ -63,28 +54,19 @@ def registerUser(request):
 def updateUserProfile(request):
     print(request.data)
     user = request.user
-    serializer = UserProfileSerializerWithToken(user, many=False)
+    serializer = UserSerializerWithToken(user, many=False)
 
     data = request.data
 
-    profile = UserProfile.objects.get(email=user)
-
     user.first_name = data['first_name']
-    profile.first_name = data['first_name']
-
     user.last_name = data['last_name']
-    profile.last_name = data['last_name']
-
     user.email = data['email']
     user.username = data['email']
-    profile.email = data['email']
 
     if data['password'] != '':
         user.password = make_password(data['password'])
-        profile.passworl = make_password(data['password'])
 
     user.save()
-    profile.save()
 
     return Response(serializer.data)
 
@@ -92,8 +74,8 @@ def updateUserProfile(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):
-    profile = UserProfile.objects.get(user=request.user)
-    serializer = UserProfileSerializer(profile, many=False)
+    user=request.user
+    serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 
@@ -101,7 +83,7 @@ def getUserProfile(request):
 @permission_classes([IsAdminUser])
 def getUsers(request):
     users = User.objects.all()
-    serializer = UserProfileSerializer(users, many=True)
+    serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
 
@@ -127,7 +109,7 @@ def updateUser(request, pk):
 
     user.save()
 
-    serializer = UserProfileSerializer(user, many=False)
+    serializer = UserSerializer(user, many=False)
 
     return Response(serializer.data)
 

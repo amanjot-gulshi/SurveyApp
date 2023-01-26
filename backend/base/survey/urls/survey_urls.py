@@ -1,6 +1,5 @@
-from django import views
 from django.urls import path
-from . import views
+from ..views import survey_views as views
 
 urlpatterns = [
     path('', views.getSurveys, name="surveys"),

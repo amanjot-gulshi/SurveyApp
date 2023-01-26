@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     "corsheaders",
 
     'survey.apps.SurveyConfig',
-    'users.apps.UsersConfig',
 
     'rest_framework',
 ]

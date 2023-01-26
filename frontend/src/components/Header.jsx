@@ -35,12 +35,14 @@ function Header() {
                             <Navbar.Brand>SurveyApp</Navbar.Brand>
                             <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/surveys">Surveys</Nav.Link>
-                            {userInfo && (<Nav.Link href="/create">Create</Nav.Link>)}
                             {userInfo ? (
 
                                 <NavDropdown title={userInfo.first_name} id='username'>
                                     <LinkContainer to='/profile'>
                                         <NavDropdown.Item>Profile</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to='/create'>
+                                        <NavDropdown.Item>Create</NavDropdown.Item>
                                     </LinkContainer>
 
                                     <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>

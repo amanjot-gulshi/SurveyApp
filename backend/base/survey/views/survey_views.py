@@ -1,10 +1,10 @@
-from .models import Survey, Question, Choice, FilledSurvey, Answer
+from ..models import Survey, Question, Choice, FilledSurvey, Answer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from .serializers import SurveySerializer, FilledSurveySerializer
+from ..serializers import SurveySerializer, FilledSurveySerializer
 from rest_framework import status
-from users.models import UserProfile
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -23,7 +23,7 @@ def getMySurveys(request):
     data = request.GET
     print(data['user'])
 
-    profile = UserProfile.objects.get(email=data['user'])
+    profile = User.objects.get(email=data['user'])
 
     surveys = Survey.objects.filter(author=profile)
 
@@ -49,7 +49,7 @@ def createSurvey(request):
     data = request.data
     print(data)
     try:
-        profile = UserProfile.objects.get(email=data['email'])
+        profile = User.objects.get(email=data['email'])
         aSurvey = Survey.objects.create(
             author=profile,
             title=data['title']
@@ -92,7 +92,7 @@ def fillSurvey(request):
     print(data)
 
     try:
-        profile = UserProfile.objects.get(email=data['taker'])
+        profile = User.objects.get(email=data['taker'])
         aSurvey = Survey.objects.get(title=data['title'])
 
         filledSurvey = FilledSurvey.objects.create(
@@ -120,7 +120,7 @@ def getFilledSurveys(request):
     data = request.GET
     print(data['user'])
 
-    profile = UserProfile.objects.get(email=data['user'])
+    profile = User.objects.get(email=data['user'])
 
     surveys = FilledSurvey.objects.filter(taker=profile)
 

@@ -47,7 +47,7 @@ function ProfileScreen() {
         [dispatch, navigate, userInfo, user.name, success]
     )
 
-    // console.log(user)
+    console.log(user)
 
     async function submitHandler(e) {
         e.preventDefault()
